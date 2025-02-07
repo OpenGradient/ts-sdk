@@ -59,8 +59,50 @@ export function convertToModelInput(input: RawModelInput): any {
   };
 }
 
-export function convertToModelOutput(output: any): RawModelInput {
-  return output;
+export function convertToModelOutput(rawOutput: any): RawModelInput {
+  const result: RawModelInput = {};
+  
+  // Get the actual output array from the event data
+  const output = rawOutput[0] || rawOutput.output;
+  
+  // Handle number tensors (first element of output array)
+  const numberTensors = output[0];
+  for (const tensor of numberTensors) {
+    const name = tensor[0];
+    const values = tensor[1].map((v: string[]) => Number(v[0]));  // Each value is [value, decimals]
+    const shape = tensor[2].map(Number);
+    
+    if (shape.length === 1) {
+      result[name] = values;
+    } else if (shape.length === 2) {
+      const rows = shape[0];
+      const cols = shape[1];
+      const matrix: number[][] = [];
+      for (let i = 0; i < rows; i++) {
+        const row: number[] = [];
+        for (let j = 0; j < cols; j++) {
+          row.push(values[i * cols + j]);
+        }
+        matrix.push(row);
+      }
+      result[name] = matrix;
+    }
+  }
+
+  // Handle string tensors (second element of output array)
+  const stringTensors = output[1];
+  for (const tensor of stringTensors) {
+    const name = tensor[0];
+    const values = tensor[1];
+    
+    if (values.length === 1) {
+      result[name] = values[0];
+    } else {
+      result[name] = values;
+    }
+  }
+
+  return result;
 }
 
 export async function sleep(ms: number): Promise<void> {

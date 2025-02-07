@@ -120,18 +120,16 @@ export class Client {
         );
       }
 
-      const events = await this.contract.getPastEvents("InferenceResult", {
-        fromBlock: receipt.blockNumber,
-        toBlock: receipt.blockNumber,
-      });
+      const event = receipt.logs[1];
+      const eventAbi = this.contract.options.jsonInterface.find(x => x.name === 'InferenceResult')!.inputs;
 
-      if (events.length < 1) {
-        throw new OpenGradientError(
-          "InferenceResult event not found in transaction logs",
-        );
-      }
+      const decodedLog = this.web3.eth.abi.decodeLog(
+        eventAbi || [],
+        event.data,
+        event.topics.slice(1)
+      );
+      const modelOutput = convertToModelOutput(decodedLog);
 
-      const modelOutput = convertToModelOutput(events[0].returnValues);
       return [txHash.transactionHash, modelOutput];
     };
 

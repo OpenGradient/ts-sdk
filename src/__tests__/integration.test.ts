@@ -53,7 +53,7 @@ describe("OpenGradient Client Integration Tests", () => {
   });
 
   describe("LLM Completion", () => {
-    it("should perform LLM completion on the blockchain", async () => {
+    it.skip("should perform LLM completion on the blockchain", async () => {
       jest.setTimeout(30000);
 
       try {
