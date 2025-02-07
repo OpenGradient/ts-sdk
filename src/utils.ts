@@ -61,17 +61,17 @@ export function convertToModelInput(input: RawModelInput): any {
 
 export function convertToModelOutput(rawOutput: any): RawModelInput {
   const result: RawModelInput = {};
-  
+
   // Get the actual output array from the event data
   const output = rawOutput[0] || rawOutput.output;
-  
+
   // Handle number tensors (first element of output array)
   const numberTensors = output[0];
   for (const tensor of numberTensors) {
     const name = tensor[0];
-    const values = tensor[1].map((v: string[]) => Number(v[0]));  // Each value is [value, decimals]
+    const values = tensor[1].map((v: string[]) => Number(v[0])); // Each value is [value, decimals]
     const shape = tensor[2].map(Number);
-    
+
     if (shape.length === 1) {
       result[name] = values;
     } else if (shape.length === 2) {
@@ -94,7 +94,7 @@ export function convertToModelOutput(rawOutput: any): RawModelInput {
   for (const tensor of stringTensors) {
     const name = tensor[0];
     const values = tensor[1];
-    
+
     if (values.length === 1) {
       result[name] = values[0];
     } else {

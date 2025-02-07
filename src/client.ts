@@ -121,12 +121,14 @@ export class Client {
       }
 
       const event = receipt.logs[1];
-      const eventAbi = this.contract.options.jsonInterface.find(x => x.name === 'InferenceResult')!.inputs;
+      const eventAbi = this.contract.options.jsonInterface.find(
+        (x) => x.name === "InferenceResult",
+      )!.inputs;
 
       const decodedLog = this.web3.eth.abi.decodeLog(
         eventAbi || [],
         event.data,
-        event.topics.slice(1)
+        event.topics.slice(1),
       );
       const modelOutput = convertToModelOutput(decodedLog);
 
