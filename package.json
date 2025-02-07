@@ -40,5 +40,11 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
+  },
+  "dependencies": {
+    "@types/web3": "^1.2.2",
+    "web3": "^1.10.3",
+    "web3-core": "^1.10.3",
+    "web3-eth-contract": "^1.10.3"
   }
 }
