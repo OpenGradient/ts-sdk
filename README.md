@@ -11,7 +11,7 @@ npm install opengradient-sdk
 ## Quick Start
 
 ```typescript
-import { Client, LLMInferenceMode } from 'opengradient-sdk';
+import { Client, InferenceMode, LLMInferenceMode } from 'opengradient-sdk';
 
 // Initialize the client
 const client = new Client({
