@@ -13,13 +13,7 @@ import {
   OpenGradientError,
 } from "./types";
 import { convertToModelInput, convertToModelOutput, sleep } from "./utils";
-import {
-  LLM_TX_TIMEOUT,
-  INFERENCE_TX_TIMEOUT,
-  REGULAR_TX_TIMEOUT,
-  DEFAULT_MAX_RETRY,
-  DEFAULT_RETRY_DELAY_SEC,
-} from "./constants";
+import { DEFAULT_MAX_RETRY, DEFAULT_RETRY_DELAY_SEC } from "./constants";
 
 export class Client {
   private readonly web3: Web3;
