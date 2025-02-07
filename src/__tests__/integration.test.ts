@@ -1,17 +1,23 @@
-import { Client, InferenceMode, LLMInferenceMode } from "..";
-import dotenv from "dotenv";
+import { Client, InferenceMode, LLMInferenceMode } from '../';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 // Get environment variables
-const { PRIVATE_KEY, RPC_URL, CONTRACT_ADDRESS } = process.env;
+import { DEFAULT_CONFIG } from '../defaults';
+
+const {
+  PRIVATE_KEY,
+  RPC_URL = DEFAULT_CONFIG.rpcUrl,
+  CONTRACT_ADDRESS = DEFAULT_CONFIG.inferenceContractAddress
+} = process.env;
 
 // Ensure environment variables are set
 if (!PRIVATE_KEY || !RPC_URL || !CONTRACT_ADDRESS) {
-  throw new Error("Required environment variables are not set");
+  throw new Error('Required environment variables are not set');
 }
 
-describe("OpenGradient Client Integration Tests", () => {
+describe('OpenGradient Client Integration Tests', () => {
   let client: Client;
 
   beforeAll(() => {
@@ -19,94 +25,94 @@ describe("OpenGradient Client Integration Tests", () => {
     client = new Client({
       privateKey: PRIVATE_KEY,
       rpcUrl: RPC_URL,
-      contractAddress: CONTRACT_ADDRESS,
+      contractAddress: CONTRACT_ADDRESS
     });
   });
 
-  describe("Inference", () => {
-    it("should perform inference on the blockchain", async () => {
+  describe('Inference', () => {
+    it('should perform inference on the blockchain', async () => {
       // This test might take a while due to blockchain interaction
       jest.setTimeout(30000); // 30 seconds timeout
 
       const modelInput = {
-        input: [1, 2, 3, 4, 5],
+        input: [1, 2, 3, 4, 5]
       };
 
       try {
         const [txHash, output] = await client.infer(
-          "test-model-cid", // Replace with your actual model CID
+          'test-model-cid', // Replace with your actual model CID
           InferenceMode.VANILLA,
-          modelInput,
+          modelInput
         );
 
-        console.log("Transaction Hash:", txHash);
-        console.log("Model Output:", output);
+        console.log('Transaction Hash:', txHash);
+        console.log('Model Output:', output);
 
         // Basic validation
         expect(txHash).toBeTruthy();
         expect(output).toBeDefined();
       } catch (error) {
-        console.error("Inference failed:", error);
+        console.error('Inference failed:', error);
         throw error;
       }
     }, 30000); // Timeout of 30 seconds
   });
 
-  describe("LLM Completion", () => {
-    it("should perform LLM completion on the blockchain", async () => {
+  describe('LLM Completion', () => {
+    it('should perform LLM completion on the blockchain', async () => {
       jest.setTimeout(30000);
 
       try {
         const [txHash, response] = await client.llmCompletion(
-          "test-llm-cid", // Replace with your actual LLM model CID
+          'test-llm-cid', // Replace with your actual LLM model CID
           LLMInferenceMode.VANILLA,
-          "What is the capital of France?",
+          'What is the capital of France?',
           100, // maxTokens
           [], // stopSequence
-          0.7, // temperature
+          0.7 // temperature
         );
 
-        console.log("Transaction Hash:", txHash);
-        console.log("LLM Response:", response);
+        console.log('Transaction Hash:', txHash);
+        console.log('LLM Response:', response);
 
         expect(txHash).toBeTruthy();
         expect(response).toBeTruthy();
       } catch (error) {
-        console.error("LLM completion failed:", error);
+        console.error('LLM completion failed:', error);
         throw error;
       }
     }, 30000);
   });
 
-  describe("LLM Chat", () => {
-    it("should perform LLM chat on the blockchain", async () => {
+  describe('LLM Chat', () => {
+    it('should perform LLM chat on the blockchain', async () => {
       jest.setTimeout(30000);
 
       const messages = [
         {
-          role: "user",
-          content: "What is the weather like in Paris?",
-        },
+          role: 'user',
+          content: 'What is the weather like in Paris?'
+        }
       ];
 
       try {
         const [txHash, finishReason, message] = await client.llmChat(
-          "test-llm-cid", // Replace with your actual LLM model CID
+          'test-llm-cid', // Replace with your actual LLM model CID
           LLMInferenceMode.VANILLA,
           messages,
           100, // maxTokens
           [], // stopSequence
-          0.7, // temperature
+          0.7 // temperature
         );
 
-        console.log("Transaction Hash:", txHash);
-        console.log("Finish Reason:", finishReason);
-        console.log("Message:", message);
+        console.log('Transaction Hash:', txHash);
+        console.log('Finish Reason:', finishReason);
+        console.log('Message:', message);
 
         expect(txHash).toBeTruthy();
         expect(message).toBeDefined();
       } catch (error) {
-        console.error("LLM chat failed:", error);
+        console.error('LLM chat failed:', error);
         throw error;
       }
     }, 30000);
