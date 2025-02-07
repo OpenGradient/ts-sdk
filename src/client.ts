@@ -47,8 +47,14 @@ export class Client {
     for (let attempt = 0; attempt < maxRetries; attempt++) {
       try {
         return await txnFunction();
-      } catch (error) {
-        const errorMsg = error.message.toLowerCase();
+      } catch (err: unknown) {
+        if (!(err instanceof Error)) {
+          throw new OpenGradientError(
+            `Unknown error occurred: ${String(err)}`
+          );
+        }
+
+        const errorMsg = err.message.toLowerCase();
         
         if (NONCE_ERRORS.some(msg => errorMsg.includes(msg))) {
           if (attempt === maxRetries - 1) {
@@ -60,7 +66,7 @@ export class Client {
           continue;
         }
         
-        throw error;
+        throw err;
       }
     }
     
