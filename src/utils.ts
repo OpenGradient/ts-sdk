@@ -6,10 +6,14 @@ export function convertToModelInput(input: RawModelInput): any {
 
   for (const [key, value] of Object.entries(input)) {
     if (typeof value === "string") {
-      // Handle string input
       strings.push({
         name: key,
         values: [value],
+      });
+    } else if (Array.isArray(value) && typeof value[0] === "string") {
+      strings.push({
+        name: key,
+        values: value as string[],
       });
     } else if (typeof value === "number") {
       // Handle single number

@@ -4,7 +4,7 @@ export enum InferenceMode {
 }
 
 export type RawModelInput = {
-  [key: string]: string | number | number[] | number[][];
+  [key: string]: string | string[] | number | number[] | number[][];
 };
 
 export enum LLMInferenceMode {
