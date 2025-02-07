@@ -14,6 +14,7 @@ import {
 } from "./types";
 import { convertToModelInput, convertToModelOutput, sleep } from "./utils";
 import { DEFAULT_MAX_RETRY, DEFAULT_RETRY_DELAY_SEC } from "./constants";
+import { DEFAULT_CONFIG } from "./defaults";
 
 export class Client {
   private readonly web3: Web3;
@@ -22,13 +23,16 @@ export class Client {
   private readonly contract: Contract;
 
   constructor(config: ClientConfig) {
-    this.web3 = new Web3(config.rpcUrl);
+    const rpcUrl = DEFAULT_CONFIG.rpcUrl;
+    const contractAddress = DEFAULT_CONFIG.inferenceContractAddress;
+
+    this.web3 = new Web3(rpcUrl);
     this.account = this.web3.eth.accounts.privateKeyToAccount(
       config.privateKey,
     );
-    this.contractAddress = config.contractAddress;
+    this.contractAddress = contractAddress;
 
-    // Load ABI from local file or embedded JSON
+    // Load ABI from local file
     const inferenceAbi = require("./abi/inference.json");
     this.contract = new this.web3.eth.Contract(
       inferenceAbi,

@@ -31,5 +31,5 @@ export {
   DEFAULT_IMAGE_GEN_HOST,
   DEFAULT_IMAGE_GEN_PORT,
   getExplorerUrl,
-  getFaucetUrl
-} from './defaults';
+  getFaucetUrl,
+} from "./defaults";

@@ -41,8 +41,6 @@ export interface LLMChatRequest extends Omit<LLMRequest, "prompt"> {
 
 export interface ClientConfig {
   privateKey: string;
-  rpcUrl: string;
-  contractAddress: string;
 }
 
 export class OpenGradientError extends Error {
