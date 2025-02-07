@@ -45,7 +45,7 @@ const [txHash, output] = await client.infer(
 
 - On-chain ML model inference
 - LLM completion and chat interfaces
-- Support for vanilla and TEE (Trusted Execution Environment) inference modes
+- Support for vanilla, ZKML and TEE (Trusted Execution Environment) inference modes
 - Automatic transaction retry with configurable parameters
 - Built-in gas estimation and management
 - Tool calling support for LLM chat
