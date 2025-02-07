@@ -47,7 +47,9 @@ describe("OpenGradient Client Integration Tests", () => {
         expect(output).toBeDefined();
 
         expect(output.num_output1).toEqual([11, 12, 13]);
+        expect(output.num_output2).toEqual([10]);
         expect(output.str_output1).toEqual(["hello", "ONNXY", " world"]);
+        expect(output.str_output2).toEqual(" world");
       } catch (error) {
         console.error("Inference failed:", error);
         throw error;
