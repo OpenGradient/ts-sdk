@@ -17,7 +17,7 @@ export interface ModelOutput {
 }
 
 export interface LLMRequest {
-  mode: InferenceMode;
+  mode: LLMInferenceMode;
   modelCID: string;
   prompt: string;
   maxTokens: number;

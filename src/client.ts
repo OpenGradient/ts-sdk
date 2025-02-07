@@ -62,7 +62,7 @@ export class Client {
         if (NONCE_ERRORS.some((msg) => errorMsg.includes(msg))) {
           if (attempt === maxRetries - 1) {
             throw new OpenGradientError(
-              `Transaction failed after ${maxRetries} attempts: ${error.message}`,
+              `Transaction failed after ${maxRetries} attempts: ${err.message}`,
             );
           }
           await sleep(retryDelay * 1000);
@@ -145,7 +145,7 @@ export class Client {
 
   async llmCompletion(
     modelCid: string,
-    inferenceMode: InferenceMode,
+    inferenceMode: LLMInferenceMode,
     prompt: string,
     maxTokens: number = 100,
     stopSequence: string[] = [],
@@ -225,7 +225,7 @@ export class Client {
 
   async llmChat(
     modelCid: string,
-    inferenceMode: InferenceMode,
+    inferenceMode: LLMInferenceMode,
     messages: LLMChatMessage[],
     maxTokens: number = 100,
     stopSequence: string[] = [],
