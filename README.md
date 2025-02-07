@@ -20,17 +20,24 @@ const client = new Client({
 
 // Run LLM chat inference
 const [txHash, finishReason, response] = await client.llmChat(
-  'model-cid',
+  'Qwen/Qwen2.5-72B-Instruct',
   LLMInferenceMode.VANILLA,
   [{ role: 'user', content: 'Hello!' }],
   100 // max tokens
 );
 
 // Run general model inference
+const modelInput = {
+  num_input1: [1.0, 2.0, 3.0],
+  num_input2: 10,
+  str_input1: ["hello", "ONNXY"],
+  str_input2: " world"
+};
+
 const [txHash, output] = await client.infer(
-  'model-cid',
+  "QmbUqS93oc4JTLMHwpVxsE39mhNxy6hpf6Py3r9oANr8aZ",
   InferenceMode.VANILLA,
-  inputData
+  modelInput
 );
 ```
 
