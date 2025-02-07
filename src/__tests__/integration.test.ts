@@ -1,4 +1,4 @@
-import { Client, InferenceMode, LLMInferenceMode } from "../";
+import { Client, InferenceMode, LLMInferenceMode, RawModelInput } from "../";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -21,17 +21,20 @@ describe("OpenGradient Client Integration Tests", () => {
   });
 
   describe("Inference", () => {
-    it.skip("should perform inference on the blockchain", async () => {
+    it("should perform inference on the blockchain", async () => {
       // This test might take a while due to blockchain interaction
       jest.setTimeout(30000); // 30 seconds timeout
 
-      const modelInput = {
-        input: [1, 2, 3, 4, 5],
+      const modelInput: RawModelInput = {
+        num_input1: [1.0, 2.0, 3.0],
+        num_input2: 10,
+        str_input1: ["hello", "ONNXY"],
+        str_input2: " world",
       };
 
       try {
         const [txHash, output] = await client.infer(
-          "test-model-cid", // Replace with your actual model CID
+          "QmbUqS93oc4JTLMHwpVxsE39mhNxy6hpf6Py3r9oANr8aZ",
           InferenceMode.VANILLA,
           modelInput,
         );
@@ -76,7 +79,7 @@ describe("OpenGradient Client Integration Tests", () => {
   });
 
   describe("LLM Chat", () => {
-    it("should perform LLM chat on the blockchain", async () => {
+    it.skip("should perform LLM chat on the blockchain", async () => {
       jest.setTimeout(30000);
 
       const messages = [

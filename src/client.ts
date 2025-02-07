@@ -5,12 +5,9 @@ import {
   ClientConfig,
   InferenceMode,
   LLMInferenceMode,
-  ModelInput,
-  ModelOutput,
-  LLMRequest,
-  LLMChatRequest,
   LLMChatMessage,
   OpenGradientError,
+  RawModelInput,
 } from "./types";
 import { convertToModelInput, convertToModelOutput, sleep } from "./utils";
 import { DEFAULT_MAX_RETRY, DEFAULT_RETRY_DELAY_SEC } from "./constants";
@@ -77,10 +74,10 @@ export class Client {
   async infer(
     modelCid: string,
     inferenceMode: InferenceMode,
-    modelInput: ModelInput,
+    modelInput: RawModelInput,
     maxRetries?: number,
-  ): Promise<[string, ModelOutput]> {
-    const execute = async (): Promise<[string, ModelOutput]> => {
+  ): Promise<[string, RawModelInput]> {
+    const execute = async (): Promise<[string, RawModelInput]> => {
       const inferenceMode8 = Number(inferenceMode);
       const convertedInput = convertToModelInput(modelInput);
 

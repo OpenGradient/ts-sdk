@@ -3,12 +3,11 @@ export { Client } from "./client";
 export {
   InferenceMode,
   LLMInferenceMode,
-  ModelInput,
-  ModelOutput,
   LLMRequest,
   LLMChatMessage,
   LLMChatRequest,
   ClientConfig,
+  RawModelInput,
   OpenGradientError,
 } from "./types";
 

@@ -3,17 +3,13 @@ export enum InferenceMode {
   TEE = 1,
 }
 
+export type RawModelInput = {
+  [key: string]: string | number | number[] | number[][];
+};
+
 export enum LLMInferenceMode {
   VANILLA = InferenceMode.VANILLA,
   TEE = InferenceMode.TEE,
-}
-
-export interface ModelInput {
-  [key: string]: string | number | number[] | number[][];
-}
-
-export interface ModelOutput {
-  [key: string]: number[];
 }
 
 export interface LLMRequest {
