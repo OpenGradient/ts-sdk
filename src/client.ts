@@ -160,12 +160,12 @@ export class Client {
         );
       }
 
-      const llmRequest: LLMRequest = {
+      const llmRequest = {
         mode: inferenceMode,
         modelCID: modelCid,
         prompt,
-        maxTokens,
-        stopSequence,
+        max_tokens: maxTokens,
+        stop_sequence: stopSequence,
         temperature: Math.floor(temperature * 100),
       };
 
@@ -176,6 +176,7 @@ export class Client {
       );
       const estimatedGas = await runFunction.estimateGas({
         from: this.account.address,
+        value: 0,
       });
       const gasLimit = Math.floor(estimatedGas * 1.5);
       const gasPrice = await this.web3.eth.getGasPrice();
@@ -260,15 +261,15 @@ export class Client {
         };
       });
 
-      const llmRequest: LLMChatRequest = {
+      const llmRequest = {
         mode: inferenceMode,
         modelCID: modelCid,
         messages: preparedMessages,
-        maxTokens,
-        stopSequence,
-        temperature: Math.floor(temperature * 100),
         tools: convertedTools,
-        toolChoice: toolChoice || (tools.length ? "auto" : ""),
+        tool_choice: toolChoice || (tools.length ? "auto" : ""),
+        max_tokens: maxTokens,
+        stop_sequence: stopSequence,
+        temperature: Math.floor(temperature * 100),
       };
 
       const runFunction = this.contract.methods.runLLMChat(llmRequest);
@@ -276,9 +277,10 @@ export class Client {
         this.account.address,
         "pending",
       );
-      const estimatedGas = await runFunction.estimateGas({
-        from: this.account.address,
-      });
+      // const estimatedGas = await runFunction.estimateGas({
+      //   from: this.account.address,
+      // });
+      const estimatedGas = 100000;
       const gasLimit = Math.floor(estimatedGas * 1.5);
       const gasPrice = await this.web3.eth.getGasPrice();
 

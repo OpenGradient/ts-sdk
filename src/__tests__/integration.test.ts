@@ -21,10 +21,7 @@ describe("OpenGradient Client Integration Tests", () => {
   });
 
   describe("Inference", () => {
-
-    it("should perform inference on the blockchain", async () => {
-      return;
-
+    it.skip("should perform inference on the blockchain", async () => {
       // This test might take a while due to blockchain interaction
       jest.setTimeout(30000); // 30 seconds timeout
 
@@ -53,7 +50,6 @@ describe("OpenGradient Client Integration Tests", () => {
   });
 
   describe("LLM Completion", () => {
-
     it("should perform LLM completion on the blockchain", async () => {
       jest.setTimeout(30000);
 
