@@ -45,6 +45,9 @@ describe("OpenGradient Client Integration Tests", () => {
         // Basic validation
         expect(txHash).toBeTruthy();
         expect(output).toBeDefined();
+
+        expect(output.num_output1).toEqual([11, 12, 13]);
+        expect(output.str_output1).toEqual(["hello", "ONNXY", " world"]);
       } catch (error) {
         console.error("Inference failed:", error);
         throw error;
