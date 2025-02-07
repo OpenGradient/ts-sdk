@@ -1,4 +1,4 @@
-import { ModelInput, ModelOutput } from './types';
+import { ModelInput, ModelOutput } from "./types";
 
 export function convertToModelInput(input: ModelInput): any {
   // Implementation for converting model input to contract format
@@ -11,5 +11,5 @@ export function convertToModelOutput(output: any): ModelOutput {
 }
 
 export async function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

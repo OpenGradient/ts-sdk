@@ -1,11 +1,11 @@
 export enum InferenceMode {
   VANILLA = 0,
-  TEE = 1
+  TEE = 1,
 }
 
 export enum LLMInferenceMode {
   VANILLA = InferenceMode.VANILLA,
-  TEE = InferenceMode.TEE
+  TEE = InferenceMode.TEE,
 }
 
 export interface ModelInput {
@@ -33,7 +33,7 @@ export interface LLMChatMessage {
   name?: string;
 }
 
-export interface LLMChatRequest extends Omit<LLMRequest, 'prompt'> {
+export interface LLMChatRequest extends Omit<LLMRequest, "prompt"> {
   messages: LLMChatMessage[];
   tools?: any[];
   toolChoice?: string;
@@ -50,7 +50,7 @@ export class OpenGradientError extends Error {
 
   constructor(message: string, statusCode?: number) {
     super(message);
-    this.name = 'OpenGradientError';
+    this.name = "OpenGradientError";
     this.statusCode = statusCode;
   }
 }
